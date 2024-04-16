@@ -1,56 +1,105 @@
 // 後でビジュアルマップを作ってそれぞれのjsファイル/function/constructorを確認する
 
+// BONUS - Iteration 10: Points, points, points
+class Player extends Component {
+  constructor(gameScreen, left, top, width, height, imgSrc) {
+    super(gameScreen, left, top, width, height, imgSrc);
+    this.directionX = 0;
+    this.directionY = 0;
+  }
+
+  move() {
+    this.left += this.directionX;
+    this.top += this.directionY;
+
+    if (this.left < 10) {
+      this.left = 10;
+    }
+    if (this.top < 10) {
+      this.top = 10;
+    }
+    if (this.left > this.gameScreen.offsetWidth - this.width - 10) {
+      this.left = this.gameScreen.offsetWidth - this.width - 10;
+    }
+    if (this.top > this.gameScreen.offsetHeight - this.height - 10) {
+      this.top = this.gameScreen.offsetHeight - this.height - 10;
+    }
+
+    this.updatePosition();
+  }
+
+  didCollide(obstacle) {
+    const playerRect = this.element.getBoundingClientRect();
+    const obstacleRect = obstacle.element.getBoundingClientRect();
+
+    if (
+      playerRect.left < obstacleRect.right &&
+      playerRect.right > obstacleRect.left &&
+      playerRect.top < obstacleRect.bottom &&
+      playerRect.bottom > obstacleRect.top
+    ) {
+      console.log("Crash!");
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
+
+
+
 // BONUS - Iteration 9
 // Inheritance from superclass 'Component' in component.js
-class Player extends Component {
-    constructor(gameScreen, left, top, width, height, imgSrc) {
-        super(gameScreen, left, top, width, height, imgSrc);
+// class Player extends Component {
+//   constructor(gameScreen, left, top, width, height, imgSrc) {
+//     super(gameScreen, left, top, width, height, imgSrc);
 
-        this.directionX = 0;
-        this.directionY = 0;
-    }
+//     this.directionX = 0;
+//     this.directionY = 0;
+//   }
 
-    move() {
-        // Update player's car position based on directionX and directionY
-        this.left += this.directionX;
-        this.top += this.directionY;
-        debugger;
+//   move() {
+//     // Update player's car position based on directionX and directionY
+//     this.left += this.directionX;
+//     this.top += this.directionY;
+//     debugger;
 
-        // Ensure the player's car stays within the game screen
-        if (this.left < 10) {
-            this.left = 10;
-        }
-        if (this.top < 10) {
-            this.top = 10;
-        }
-        if (this.left > this.gameScreen.offsetWidth - this.width - 10) {
-            this.left = this.gameScreen.offsetWidth - this.width - 10;
-        }
-        if (this.top > this.gameScreen.offsetHeight - this.height - 10) {
-            this.top = this.gameScreen.offsetHeight - this.height - 10;
-        }
+//     // Ensure the player's car stays within the game screen
+//     if (this.left < 10) {
+//       this.left = 10;
+//     }
+//     if (this.top < 10) {
+//       this.top = 10;
+//     }
+//     if (this.left > this.gameScreen.offsetWidth - this.width - 10) {
+//       this.left = this.gameScreen.offsetWidth - this.width - 10;
+//     }
+//     if (this.top > this.gameScreen.offsetHeight - this.height - 10) {
+//       this.top = this.gameScreen.offsetHeight - this.height - 10;
+//     }
 
-        // Update the player's car position on the screen
-        this.updatePosition();
-    }
+//     // Update the player's car position on the screen
+//     this.updatePosition();
+//   }
 
-    didCollide(obstacle) {
-        const playerRect = this.element.getBoundingClientRect();
-        const obstacleRect = obstacle.element.getBoundingClientRect();
+//   didCollide(obstacle) {
+//     const playerRect = this.element.getBoundingClientRect();
+//     const obstacleRect = obstacle.element.getBoundingClientRect();
 
-        if (
-            playerRect.left < obstacleRect.right &&
-            playerRect.right > obstacleRect.left &&
-            playerRect.top < obstacleRect.bottom &&
-            playerRect.bottom > obstacleRect.top
-        ) {
-            console.log("Crash!");
-            return true;
-        } else {
-            return false;
-        }
-    }
-}
+//     if (
+//       playerRect.left < obstacleRect.right &&
+//       playerRect.right > obstacleRect.left &&
+//       playerRect.top < obstacleRect.bottom &&
+//       playerRect.bottom > obstacleRect.top
+//     ) {
+//       console.log("Crash!");
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   }
+// }
 
 
 // !!! Code before iteration 9
@@ -127,27 +176,3 @@ class Player extends Component {
 //         }
 //     }
 // }
-
-
-
-// class Game {
-//     // code to be added
-//     constructor() {
-//         this.startScreen = document.getElementById(`game-intro`);
-//         this.gameScreen = document.getElementById(`game-screen`);
-//         this.gameEndScreen = document.getElementById(`game-end`);
-//         this.player = null;
-//         // ↑ leave it as null for now. We will use this property to save the instance of the Player class that we'll create it in the next iteration.
-//         this.height = 600;
-//         this.width = 500;
-//         this.obstacles = [];
-//         // ↑ an empty array. We'll use it to store the obstacle instances we create later.
-//         this.score = 0;
-//         this.lives = 3;
-//         this.gameIsOver = false;
-//         // ↑ a flag used to track whether the game is over. Set the initial value to false.
-//         this.gameIntervalId;
-//         // ↑ a variable used to store the id of the interval running the game loop. We store and use this id to clear the interval once the game is over.gameIntervalId
-//         this.gameLoopFrequency = Math.round(1000 / 60); // 60fps
-//         // ↑ gameLoopFrecuency - a number that indicates the interval in milliseconds at which the game loop will execute. A good value for most screens is 1000/60, which equates to the the game being updated every ~17 millisecond, or about 60 times per second (60fps).
-//     }
