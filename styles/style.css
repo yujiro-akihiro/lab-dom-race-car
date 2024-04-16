@@ -27,13 +27,13 @@ body {
 
 @keyframes slide {
   0% {
-    background-position: 0 -1000px;
+    background-position: 0 -1000px; /* start position*/
   }
   95% {
-    background-position: 0 0;
+    background-position: 0 0; /* mid */
   }
   100% {
-    background-position: 0 50px;
+    background-position: 0 50px; /* end */
   }
 }
 
